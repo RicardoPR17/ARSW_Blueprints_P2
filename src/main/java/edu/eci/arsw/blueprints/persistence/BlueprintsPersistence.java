@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.persistence;
+package edu.eci.arsw.blueprints.persistence;
 
-import edu.eci.arsw.model.Blueprint;
+
+
+import edu.eci.arsw.blueprints.model.Blueprint;
 
 import java.util.Set;
 
@@ -50,5 +52,7 @@ public interface BlueprintsPersistence {
      * @return a set with all the blueprints
      */
     public Set<Blueprint> getAllBlueprints();
+
+    public void deleteBlueprints();
 
 }

@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.services;
+package edu.eci.arsw.blueprints.services;
 
 
-import edu.eci.arsw.model.Blueprint;
-import edu.eci.arsw.persistence.BlueprintFilter;
-import edu.eci.arsw.persistence.BlueprintNotFoundException;
-import edu.eci.arsw.persistence.BlueprintPersistenceException;
-import edu.eci.arsw.persistence.BlueprintsPersistence;
+import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.persistence.BlueprintFilter;
+import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
+import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.ManagedBean;
 import java.util.Set;
 
 /**
@@ -42,6 +44,11 @@ public class BlueprintsServices {
     }
 
     public Set<Blueprint> getAllBlueprints() {
+        Set<Blueprint> blueprints= bpp.getAllBlueprints();
+        bpp.deleteBlueprints();
+        for (Blueprint bp: blueprints){
+            addNewBlueprint(bp);
+        }
         return bpp.getAllBlueprints();
     }
 

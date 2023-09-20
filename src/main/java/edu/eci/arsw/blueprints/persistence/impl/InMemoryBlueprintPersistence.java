@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.persistence.impl;
+package edu.eci.arsw.blueprints.persistence.impl;
 
 
 import java.util.HashMap;
@@ -11,12 +11,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import edu.eci.arsw.model.Blueprint;
-import edu.eci.arsw.model.Point;
-import edu.eci.arsw.persistence.BlueprintNotFoundException;
-import edu.eci.arsw.persistence.BlueprintPersistenceException;
-import edu.eci.arsw.persistence.BlueprintsPersistence;
-import org.springframework.beans.factory.annotation.Qualifier;
+
+import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.model.Point;
+import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
+import edu.eci.arsw.persistence.impl.Tuple;
+import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,20 +31,20 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
 
     public InMemoryBlueprintPersistence() {
         // load stub data
-        Point[] pts = new Point[] { new Point(140, 140), new Point(115, 115) };
-        Blueprint bp = new Blueprint("_authorname_", "_bpname_ ", pts);
+        Point[] pts = new Point[] { new Point(140, 140), new Point(115, 115) , new Point(115,115)};
+        Blueprint bp = new Blueprint("lina", "_bpname_ ", pts);
         blueprints.put(new Tuple<>(bp.getAuthor(), bp.getName()), bp);
 
-        Point[] pts1 = new Point[] { new Point(140, 140), new Point(115, 115) };
-        Blueprint bp1 = new Blueprint("_authorname_", "_bpname1_ ", pts1);
+        Point[] pts1 = new Point[] { new Point(150, 150), new Point(165, 165) };
+        Blueprint bp1 = new Blueprint("mario", "_bpname1_ ", pts1);
         blueprints.put(new Tuple<>(bp.getAuthor(), bp1.getName()), bp1);
 
-        Point[] pts2 = new Point[] { new Point(140, 140), new Point(115, 115) };
-        Blueprint bp2 = new Blueprint("Luis", "_bpname2_ ", pts2);
+        Point[] pts2 = new Point[] { new Point(114, 114), new Point(111, 111) };
+        Blueprint bp2 = new Blueprint("luis", "_bpname2_ ", pts2);
         blueprints.put(new Tuple<>(bp.getAuthor(), bp2.getName()), bp2);
 
-        Point[] pts3 = new Point[] { new Point(140, 140), new Point(115, 115) };
-        Blueprint bp3 = new Blueprint("Mario", "_bpname3_ ", pts3);
+        Point[] pts3 = new Point[] { new Point(200, 200), new Point(200, 200) };
+        Blueprint bp3 = new Blueprint("mario", "_bpname3_ ", pts3);
         blueprints.put(new Tuple<>(bp.getAuthor(), bp3.getName()), bp3);
 
     }
@@ -83,5 +84,10 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
     @Override
     public Set<Blueprint> getAllBlueprints() {
         return new HashSet(blueprints.values());
+    }
+
+    @Override
+    public void  deleteBlueprints(){
+        blueprints.clear();
     }
 }

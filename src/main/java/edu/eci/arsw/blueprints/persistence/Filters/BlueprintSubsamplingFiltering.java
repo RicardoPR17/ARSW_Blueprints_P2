@@ -1,9 +1,10 @@
-package edu.eci.arsw.persistence.Filters;
+package edu.eci.arsw.blueprints.persistence.Filters;
 
 
-import edu.eci.arsw.model.Blueprint;
-import edu.eci.arsw.model.Point;
-import edu.eci.arsw.persistence.BlueprintFilter;
+import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.model.Point;
+
+import edu.eci.arsw.blueprints.persistence.BlueprintFilter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 

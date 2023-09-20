@@ -11,17 +11,16 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import edu.eci.arsw.persistence.BlueprintNotFoundException;
-import edu.eci.arsw.services.BlueprintsServices;
+import com.google.gson.Gson;
+
+import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.services.BlueprintsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
- *
  * @author hcadavid
  */
 @RestController
@@ -32,17 +31,29 @@ public class BlueprintAPIController {
     private BlueprintsServices blueprintServices;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getBlueprints(){
+    public ResponseEntity<?> getBlueprints() {
         try {
-            //obtener datos que se enviarán a través del API
-            return new ResponseEntity<>(blueprintServices.getAllBlueprints(), HttpStatus.ACCEPTED);
+            Set<Blueprint> blueprints = blueprintServices.getAllBlueprints();
+            Gson gson = new Gson();
+            return new ResponseEntity<>(gson.toJson(blueprints), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("Error bla bla bla",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
         }
     }
-    
-    
-    
+
+    @GetMapping(value = "/{author}")
+    public ResponseEntity<?> getBlueprintsByAuthor(@PathVariable("author") String author) {
+        try {
+            Set<Blueprint> blueprints = blueprintServices.getBlueprintsByAuthor(author);
+            Gson gson = new Gson();
+            return new ResponseEntity<>(gson.toJson(blueprints), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 }
 
