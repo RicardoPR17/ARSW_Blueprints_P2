@@ -38,7 +38,7 @@ public class BlueprintAPIController {
             return new ResponseEntity<>(gson.toJson(blueprints), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -54,6 +54,8 @@ public class BlueprintAPIController {
         }
     }
 
+
+    
     @GetMapping(value = "/{author}/{bpname}")
     public ResponseEntity<?> getBlueprintsByAuthorAndBpname(@PathVariable String author, @PathVariable String bpname) {
         try {
