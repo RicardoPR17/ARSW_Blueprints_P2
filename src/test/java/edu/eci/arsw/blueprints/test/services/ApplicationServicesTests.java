@@ -1,9 +1,9 @@
 package edu.eci.arsw.blueprints.test.services;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
-@SpringBootTest()
+@ContextConfiguration
 public class ApplicationServicesTests {
 
     // RestaurantOrderServicesStub ros;
