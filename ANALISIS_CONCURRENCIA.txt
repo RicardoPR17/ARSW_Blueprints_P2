@@ -9,4 +9,6 @@ Regiones críticas:
     actualización, o podría presentarse el caso de que más de un usuario desee modificar el mismo plano al tiempo.
 
 Solución planteada:
-    
+    Dado que los planos son almacenados en un HashMap en la dependencia inyectada de InMemoryBlueprintsPersistance, se decide modificar el tipo de
+    mapa utilizado por uno de tipo atómico. Al cambiar por un ConcurrentHashMap, este conserva las funciones del Map, con el adicional de que se 
+    tiene un control de la lectura y la escritura sobre los blueprints; para tratar las condiciones de carrera identificadas anteriormente.
