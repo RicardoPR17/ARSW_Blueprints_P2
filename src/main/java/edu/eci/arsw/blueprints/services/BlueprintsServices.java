@@ -61,6 +61,11 @@ public class BlueprintsServices {
      */
     public Blueprint getBlueprint(String author, String name) throws BlueprintNotFoundException {
         try {
+            Set<Blueprint> blueprints= bpp.getAllBlueprints();
+            bpp.deleteBlueprints();
+            for (Blueprint bp: blueprints){
+                addNewBlueprint(bp);
+            }
             return bpp.getBlueprint(author, name);
         } catch (BlueprintNotFoundException e) {
             throw new BlueprintNotFoundException("Blueprint not found");
@@ -75,6 +80,11 @@ public class BlueprintsServices {
      */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException {
         try {
+            Set<Blueprint> blueprints= bpp.getAllBlueprints();
+            bpp.deleteBlueprints();
+            for (Blueprint bp: blueprints){
+                addNewBlueprint(bp);
+            }
             return bpp.getBlueprintByAuthor(author);
         } catch (BlueprintNotFoundException e) {
             throw new BlueprintNotFoundException("Author not found");
