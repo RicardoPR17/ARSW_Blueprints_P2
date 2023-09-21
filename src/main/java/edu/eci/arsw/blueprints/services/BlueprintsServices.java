@@ -45,7 +45,6 @@ public class BlueprintsServices {
             try {
                 addNewBlueprint(bp);
             } catch (BlueprintPersistenceException e) {
-                e.printStackTrace();
             }
         }
         return bpp.getAllBlueprints();
@@ -89,7 +88,6 @@ public class BlueprintsServices {
                 try {
                     addNewBlueprint(bp);
                 } catch (BlueprintPersistenceException e) {
-                    e.printStackTrace();
                 }
             }
             return bpp.getBlueprintByAuthor(author);
@@ -110,15 +108,10 @@ public class BlueprintsServices {
         blueprint.setPoints(points);
     }
 
-    public void setBlueprint(Blueprint blueprint, String author, String bpname)
-            throws BlueprintNotFoundException, BlueprintPersistenceException {
-        if (getAllBlueprints().contains(blueprint)) {
-            throw new BlueprintPersistenceException("The given values of a blueprint already exists.");
-        }
+    public void setBlueprint(Blueprint blueprint, String author, String bpname) throws BlueprintNotFoundException {
         Blueprint bp = getBlueprint(author, bpname);
         setNameBlueprint(bp, blueprint.getName());
         setAuthorBlueprint(bp, blueprint.getAuthor());
         setPointsBlueprint(bp, blueprint.getPoints());
     }
-
 }
