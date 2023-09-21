@@ -5,19 +5,18 @@
  */
 package edu.eci.arsw.blueprints.persistence.impl;
 
-
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.stereotype.Component;
 
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -26,11 +25,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
 
-    private final Map<Tuple<String, String>, Blueprint> blueprints = new HashMap<>();
+    private final Map<Tuple<String, String>, Blueprint> blueprints = new ConcurrentHashMap<>();
 
     public InMemoryBlueprintPersistence() {
         // load stub data
-        Point[] pts = new Point[] { new Point(140, 140), new Point(115, 115) , new Point(115,115)};
+        Point[] pts = new Point[] { new Point(140, 140), new Point(115, 115), new Point(115, 115) };
         Blueprint bp = new Blueprint("lina", "bpname", pts);
         blueprints.put(new Tuple<>(bp.getAuthor(), bp.getName()), bp);
 
@@ -53,13 +52,13 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
         if (blueprints.containsKey(new Tuple<>(bp.getAuthor(), bp.getName()))) {
             throw new BlueprintPersistenceException("The given blueprint already exists: " + bp);
         } else {
-            blueprints.put(new Tuple<>(bp.getAuthor(), bp.getName()), bp);
+            blueprints.putIfAbsent(new Tuple<>(bp.getAuthor(), bp.getName()), bp);
         }
     }
 
     @Override
     public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException {
-        for (Blueprint blueprint : blueprints.values()){
+        for (Blueprint blueprint : blueprints.values()) {
             if (blueprint.getAuthor().equals(author) && blueprint.getName().equals(bprintname)) {
                 return blueprint;
 
@@ -90,7 +89,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
     }
 
     @Override
-    public void  deleteBlueprints(){
+    public void deleteBlueprints() {
         blueprints.clear();
     }
 }

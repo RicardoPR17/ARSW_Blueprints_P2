@@ -45,7 +45,6 @@ public class BlueprintsServices {
             try {
                 addNewBlueprint(bp);
             } catch (BlueprintPersistenceException e) {
-                e.printStackTrace();
             }
         }
         return bpp.getAllBlueprints();
@@ -89,7 +88,6 @@ public class BlueprintsServices {
                 try {
                     addNewBlueprint(bp);
                 } catch (BlueprintPersistenceException e) {
-                    e.printStackTrace();
                 }
             }
             return bpp.getBlueprintByAuthor(author);
@@ -116,5 +114,4 @@ public class BlueprintsServices {
         setAuthorBlueprint(bp, blueprint.getAuthor());
         setPointsBlueprint(bp, blueprint.getPoints());
     }
-
 }

@@ -48,9 +48,12 @@ public class BlueprintAPIController {
             Set<Blueprint> blueprints = blueprintServices.getBlueprintsByAuthor(author);
             Gson gson = new Gson();
             return new ResponseEntity<>(gson.toJson(blueprints), HttpStatus.ACCEPTED);
-        } catch (Exception ex) {
+        } catch (BlueprintNotFoundException ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -60,9 +63,12 @@ public class BlueprintAPIController {
             Blueprint blueprint = blueprintServices.getBlueprint(author, bpname);
             Gson gson = new Gson();
             return new ResponseEntity<>(gson.toJson(blueprint), HttpStatus.ACCEPTED);
-        } catch (Exception ex) {
+        } catch (BlueprintNotFoundException ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

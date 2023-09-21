@@ -1,0 +1,14 @@
+Condiciones de carrera detectadas:
+    Se puede presentar el caso de que 2 o más usuarios quieran modificar o publicar el mismo plano al tiempo, donde podría a alguno de ellos
+    mostrarle un error. Además, si alguien está consultado en ese momento los planos existentes, sean todos o los de un autor en particular,
+    podría llegar a ver datos desactualizados en caso de que se esté corriendo de fondo una actualización.
+
+Regiones críticas:
+    Las regiones críticas identificadas serían en los llamados de los métodos que responden a las peticiones GET, POST y PUT. Esto al considerar
+    que el POST y PUT modifican los datos existentes en el sistema y se podría consultar con GET datos viejos en caso de estar a mitad de una
+    actualización, o podría presentarse el caso de que más de un usuario desee modificar el mismo plano al tiempo.
+
+Solución planteada:
+    Dado que los planos son almacenados en un HashMap en la dependencia inyectada de InMemoryBlueprintsPersistance, se decide modificar el tipo de
+    mapa utilizado por uno de tipo atómico. Al cambiar por un ConcurrentHashMap, este conserva las funciones del Map, con el adicional de que se 
+    tiene un control de la lectura y la escritura sobre los blueprints; para tratar las condiciones de carrera identificadas anteriormente.
